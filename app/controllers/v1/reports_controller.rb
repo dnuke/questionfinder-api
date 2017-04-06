@@ -4,7 +4,6 @@ class V1::ReportsController < ApplicationController
   # GET /v1/reports
   def index
     @v1_reports = V1::Report.all
-
     render json: @v1_reports
   end
 
@@ -16,7 +15,6 @@ class V1::ReportsController < ApplicationController
   # POST /v1/reports
   def create
     @v1_report = V1::Report.new(v1_report_params)
-
     if @v1_report.save
       render json: @v1_report, status: :created, location: @v1_report
     else

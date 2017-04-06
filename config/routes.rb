@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
   namespace :v1 do
-    resources :answers
-    resources :questions
-    resources :reports
-    #get 'forms/search/:term'
+    resources :answers, only: []
+    resources :questions, only: []
+    resources :reports, only: [:create]
     resources :forms do
 		member do
 			get 'getdata'
-			
+			get 'getreports'	
 		end
     end
-    resources :types
+    resources :types, only: []
     resources :categories do
 		member do
 			get 'getforms'

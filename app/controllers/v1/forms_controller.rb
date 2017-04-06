@@ -1,10 +1,13 @@
 class V1::FormsController < ApplicationController
-  before_action :set_v1_form, only: [:show, :update, :destroy, :getdata, :search]
+  before_action :set_v1_form, only: [:show, :update, :destroy, :getdata, :getreports]
 
-  # GET /v1/forms
+  # GET /v1/forms   OR GET /v1/forms?term=VAL
   def index
-    @v1_forms = V1::Form.all
-
+	if params[:term]
+	  @v1_forms = V1::Form.search(params[:term]).order("visits_count ASC")
+	else
+	  @v1_forms = V1::Form.all.order("created_at DESC")
+	end
     render json: @v1_forms
   end
 
@@ -45,15 +48,14 @@ class V1::FormsController < ApplicationController
 	for qu in @qs
 		@ans.append(qu.answer)
 	end
+	@v1_form.add_visit
     render json: ["questions":@qs,"answers":@ans]
   end
   
-  #GET /v1/forms/search/:term
-  #def search
-	#@wildcard="%#{params[:term]}%"
-	#@res=V1::Form.where("title ILIKE :s OR details ILIKE :s",s: @wildcard)
-	#render json: @res
-  #end
+  # GET /v1/forms/1/getreports
+  def getreports
+	render json: @v1_form.reports
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -8,12 +8,16 @@ class V1::Form < ApplicationRecord
 	has_many :answer, through: :questions, source: :form
 
   
-	def add_loading
-		list=self
-		if list.visits_count==nil
-			list.visits_count=0
+	def add_visit
+		if self.visits_count==nil
+			self.visits_count=0
 		end
-		list.visits_count=list.visits_count+1;
-		list.save
-	end 
+		self.visits_count=self.visits_count+1;
+		self.save
+	end
+	
+	def self.search(term)
+		term="%#{term}%"
+		where("title ILIKE :s OR details ILIKE :s",s: term)
+	end
 end
