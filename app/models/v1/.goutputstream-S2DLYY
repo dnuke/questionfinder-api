@@ -31,6 +31,5 @@ class V1::Form < ApplicationRecord
 		if self.questions_count==nil
 			self.questions_count=0
 		end
-        self.save
 	end
 end

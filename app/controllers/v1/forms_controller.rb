@@ -3,17 +3,17 @@ class V1::FormsController < ApplicationController
 
   # GET /v1/forms   OR GET /v1/forms?term=VAL
   def index
-	if params[:term]
-	  @v1_forms = V1::Form.search(params[:term]).order("visits_count ASC")
-	else
-	  @v1_forms = V1::Form.all.order("created_at DESC")
-	end
-    render json: @v1_forms
+  	if params[:term]
+  	  @v1_forms = V1::Form.search(params[:term]).order("visits_count ASC")
+  	else
+  	  @v1_forms = V1::Form.all.order("created_at DESC")
+  	end
+    render json: @v1_forms, include: :category
   end
 
   # GET /v1/forms/1
   def show
-    render json: @v1_form
+    render json: @v1_form, include: :category
   end
 
   # POST /v1/forms
@@ -44,11 +44,11 @@ class V1::FormsController < ApplicationController
   # GET /v1/forms/1/getdata
   def getdata
   	@qs=@v1_form.questions
-	@ans=[]
-	for qu in @qs
-		@ans.append(qu.answer)
-	end
-	@v1_form.add_visit
+  	@ans=[]
+  	for qu in @qs
+  		@ans.append(qu.answer)
+  	end
+  	@v1_form.add_visit
     render json: ["questions":@qs,"answers":@ans]
   end
   
