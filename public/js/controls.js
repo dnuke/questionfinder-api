@@ -18,7 +18,7 @@ app.filter('searchforms', function(){
 
 app.controller('formsloadController', function ($scope,$http){
 	$scope.pagetitle='Questionfinder-Start';
-	$http.get("http://192.168.0.101:3000/v1/forms")
+	$http.get("https://qfapi.herokuapp.com/v1/forms")
 	.then(function(response){
 		dat = response.data;
 		angular.forEach(dat,function(i){
@@ -47,7 +47,7 @@ app.config(function($routeProvider){
 app.controller('detailsController', function($scope,$routeParams,$http){
 	$scope.pagetitle='Questionfinder-Details';
 	id=$routeParams.id;
-	$http.get("http://192.168.0.101:3000/v1/forms/"+id)
+	$http.get("https://qfapi.herokuapp.com/v1/forms/"+id)
 	.then(function(response){
 		dat = response.data;
 		dat.created_at = dat.created_at.substring(0,10);
