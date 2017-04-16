@@ -100,7 +100,7 @@ section article h1{
 }
 
 section article .cat{
-	display: inline;
+	display: inline-block;
 	background: #729fcf;
 	text-align: center;
 	float: right;
